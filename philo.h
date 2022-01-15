@@ -6,17 +6,15 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 18:03:52 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/15 14:57:22 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/15 20:32:35 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# define DIE 1
-# define PAUSE 120
-# define PAUSE_MAIN 120
-# define PAUSE_MUTEX 120
+# define DIE -1
+# define END 0
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -25,6 +23,17 @@
 # include <sys/time.h>
 # include "libft/libft.h"
 
+/*ARGUMENTS:
+	number_of_philosophers
+	time_to_die
+	time_to_eat
+	time_to_sleep
+	[number_of_times_each_philosopher_must_eat]
+
+	!!!!What happend if eat &/or sleep is/are 0?!!!!*/
+
+/*1 second == 1000 mlsecond
+1 microse == 0,001 mlsecond*/
 
 typedef struct	s_argv
 {
@@ -43,7 +52,7 @@ typedef struct	s_philo
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*printing;
 	t_argv			*argums;
-	struct timeval	*t_start; // maybe segfault
+	struct timeval	*t_start;
 	struct timeval	t_eat;
 	int				die_fl;
 }					t_philo;
@@ -61,6 +70,6 @@ int		do_check_die(t_philo *phil);
 
 long	actual_time(struct timeval *start_time);
 void	ft_usleep(int mlsec);
-long	tmp_micsec_AT(struct timeval *start_time);//tmp/del after
+long	tmp_micsec_AT(struct timeval *start_time);//tmp: del after
 
 #endif

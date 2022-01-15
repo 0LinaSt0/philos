@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:55:13 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/15 14:19:30 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/15 18:53:18 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_usleep(int mlsec)
 	gettimeofday(&star_platinum, NULL);
 	while ((actual_time(&star_platinum) - actual_time(&cur_time)) < mlsec)
 	{
-		usleep (PAUSE);
+		usleep (100);
 		gettimeofday(&cur_time, NULL);
 	}
 }

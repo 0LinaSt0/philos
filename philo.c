@@ -6,17 +6,12 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:21:54 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/15 14:57:58 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/15 20:35:01 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-/*ARGUMENTS:
-	number_of_philosophers
-	time_to_die
-	time_to_eat
-	time_to_sleep
-	[number_of_times_each_philosopher_must_eat]*/
+
 
 int	check_error(int argc, char **argv)
 {
@@ -27,7 +22,7 @@ int	check_error(int argc, char **argv)
 	if (argc != 5 && argc != 6)
 	{
 		printf ("Error arguments: try again with other ones\n");
-		return (-1);
+		return (DIE);
 	}
 	while (argv[i_arr])
 	{
@@ -37,13 +32,13 @@ int	check_error(int argc, char **argv)
 			if (!ft_isdigit(argv[i_arr][i_str]))
 			{
 				printf ("Error arguments: try again with other ones\n");
-				return (-1);
+				return (DIE);
 			}
 			i_str++;
 		}
 		i_arr++;
 	}
-	return (0);
+	return (END);
 }
 
 int	char_to_num(int argc, char **argv, t_argv *argums)
@@ -53,9 +48,14 @@ int	char_to_num(int argc, char **argv, t_argv *argums)
 
 	i_arr = 0;
 	i_str = 0;
-	if (check_error(argc, argv) == -1)
-		return (-1);
+	if (check_error(argc, argv) == DIE)
+		return (DIE);
 	argums->phil_num = ft_atoi(argv[1]);
+	if (argums->phil_num == 0)
+	{
+		printf ("Error arguments: try again with other ones\n");
+		return (DIE);
+	}
 	argums->die_time = ft_atoi(argv[2]);
 	argums->eat_time = ft_atoi(argv[3]);
 	argums->sleep_time = ft_atoi(argv[4]);
@@ -63,17 +63,17 @@ int	char_to_num(int argc, char **argv, t_argv *argums)
 		argums->how_much_eats = ft_atoi(argv[5]);
 	else
 		argums->how_much_eats = -1;
-	return (0);
+	return (END);
 }
 
-/*1 second == 1000 mlsecond
-1 microse == 0,001 mlsecond*/
 void	*start(void *struct_)
 {
-	t_philo			*phil;
+	t_philo	*phil;
+	int		eat_time;
 
 	phil = (t_philo *)struct_;
-	while (1 && phil->argums->how_much_eats)
+	eat_time = phil->argums->how_much_eats;
+	while (1 && eat_time)
 	{
 		if (do_thinking(phil) == DIE)
 			return (NULL);
@@ -87,9 +87,7 @@ void	*start(void *struct_)
 
 		if ((phil->num % 2) != 0)
 		{
-			// ft_usleep(PAUSE_MUTEX);
 			pthread_mutex_lock(phil->left);
-			// ft_usleep(PAUSE_MUTEX);
 			pthread_mutex_lock(phil->right);
 			///////////////////
 			// pthread_mutex_lock(phil->printing);
@@ -115,9 +113,9 @@ void	*start(void *struct_)
 		}
 		else
 		{
-			usleep(PAUSE_MUTEX);
+			usleep(300);
 			pthread_mutex_lock(phil->right);
-			usleep(PAUSE_MUTEX);
+			usleep(300);
 			pthread_mutex_lock(phil->left);
 			///////////////////
 			// pthread_mutex_lock(phil->printing);
@@ -143,10 +141,20 @@ void	*start(void *struct_)
 		}
 		if (do_sleeping(phil) == DIE)
 			return (NULL);
-		if (phil->argums->how_much_eats)
-			phil->argums->how_much_eats--;
+		if (eat_time && eat_time != -1)
+		{
+			eat_time--;
+			pthread_mutex_lock(phil->printing);
+			printf("~~~~~~~~phil_num:%d      %d\n", phil->num, eat_time);
+			pthread_mutex_unlock(phil->printing);
+		}
 	}
-	return (NULL);
+	phil->die_fl = 1;
+	while (phil->die_fl != END)
+	{
+		///////
+	}
+	return (phil);
 }
 
 int	main_thread(t_philo *philo)
@@ -164,7 +172,6 @@ int	main_thread(t_philo *philo)
 		{
 			if (actual_time(&((philo + i)->t_eat)) >= (philo + i)->argums->die_time)
 			{
-			// printf ("i:%d cur:%ld die:%d\n", i, actual_time(&((philo + i)->t_eat)), (philo + i)->argums->die_time);
 				while (j < phil_num)
 				{
 					(philo + j)->die_fl = DIE;
@@ -173,9 +180,22 @@ int	main_thread(t_philo *philo)
 				printf("time:%ld phil_num:%d died\n", actual_time(philo->t_start),(philo + i)->num);
 				return (DIE);
 			}
+			if ((philo + i)->die_fl)
+			{
+				while (j < phil_num && (philo + j)->die_fl)
+					j++;
+				if (j == phil_num)
+				{
+					j = 0;
+					while (j < phil_num)
+						(philo + j++)->die_fl = END;
+					return (END);
+				}
+				j = 0;
+			}
 			i++;
 		}
-		usleep (PAUSE_MAIN);
+		usleep (100);
 		i = 0;
 	}
 	return (0);
@@ -184,15 +204,10 @@ int	main_thread(t_philo *philo)
 int	open_threads(t_philo *philos)
 {
 	int	i;
-	// struct timeval new;
 
 	i = 0;
-	// gettimeofday(&new, NULL);
 	while (i < philos->argums->phil_num)
 	{
-					    //    printf("---------------time:%ld phil_num:%d\n",
-				        //   tmp_micsec_AT(&new),(philos + i)->num);
-		// gettimeofday(&new, NULL);
 		pthread_create(&(philos + i)->thread, NULL, start, (philos + i));
 		pthread_detach((philos + i)->thread);
 		i++;
@@ -202,7 +217,7 @@ int	open_threads(t_philo *philos)
 		//free all
 		return (DIE);
 	}
-	return (0);
+	return (END);
 }
 
 int	initialization(t_argv *argums)
@@ -223,7 +238,7 @@ int	initialization(t_argv *argums)
 		return (DIE);
 	}
 	gettimeofday(&cur_time, NULL);
-
+	pthread_mutex_init(&(mute_arr[i]), NULL);
 	philo_arr[i].num = i + 1;
 	philo_arr[i].right = &(mute_arr[argums->phil_num - 1]);
 	philo_arr[i].left = &(mute_arr[i]);
@@ -249,43 +264,22 @@ int	initialization(t_argv *argums)
 		i++;
 	}
 	if (open_threads(philo_arr) == DIE)
-		// return (DIE);
+		return (DIE);
 	// return (0);
-	for(int i=0; i<argums->phil_num; i++){
-		printf("#:%d  -> %p\n", i, mute_arr + i);
-	}
-
-	for(int i=0; i<argums->phil_num; i++){
-		printf("num:%d     ->     R - %p     L - %p\n", philo_arr[i].num, philo_arr[i].right, philo_arr[i].left);
-	}
-	return (0);
+	// for(int i=0; i<argums->phil_num; i++){
+	// 	printf("#:%d  -> %p\n", i, mute_arr + i);
+	// }
+	// for(int i=0; i<argums->phil_num; i++){
+	// 	printf("num:%d     ->     R - %p     L - %p\n", philo_arr[i].num, philo_arr[i].right, philo_arr[i].left);
+	// }
+	return (END);
 }
 
 int	main (int argc, char **argv)
 {
-	t_argv arg;
-	char_to_num(argc, argv, &arg);
-	// printf("phil_num = %d\ndie_time = %d\neat_time = %d\nsleep_time=%d\n", arg.phil_num, arg.die_time, arg.eat_time, arg.sleep_time);
+		t_argv	argums;
 
-	/*
-	struct timeval begin;
-	gettimeofday(&begin, 0);
-	usleep(500 * 1000);
-	printf("%ld\n", actual_time(&begin));
-	*/
-
-	/*
-	struct timeval begin;
-	gettimeofday(&begin, 0);
-	ft_usleep(5);
-	printf("%ld\n", tmp_micsec_AT(&begin));
-	*/
-
-	// return 0;
-
-	t_argv	argums;
-
-	if (char_to_num(argc, argv, &argums) < 0 || initialization(&argums))
+	if (char_to_num(argc, argv, &argums) == DIE || initialization(&argums) == DIE)
 		return (DIE);
 
 	// printf ("%d\n", argums.phil_num);
@@ -293,7 +287,6 @@ int	main (int argc, char **argv)
 	// printf ("%d\n", argums.eat_time);
 	// printf ("%d\n", argums.sleep_time);
 	// printf ("%d\n", argums.how_much_eats);
-
 	// while (){
 	// 	pthread_mutexattr_init(arr[i]);
 	// }0
