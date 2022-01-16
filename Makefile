@@ -6,7 +6,7 @@
 #    By: msalena <msalena@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/12 13:14:56 by msalena           #+#    #+#              #
-#    Updated: 2022/01/15 12:14:10 by msalena          ###   ########.fr        #
+#    Updated: 2022/01/16 13:06:26 by msalena          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME_LIB	= 	$(LIBDIR)/libft.a
 
 NAME_PH		= 	philo
 
-GCC			= 	gcc -g #-Wall -Wextra -Werror -g
+GCC			= 	gcc -Wall -Wextra -Werror -g
 
 all:			c_for_libft $(NAME_PH)
 

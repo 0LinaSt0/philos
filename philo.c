@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:21:54 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/15 20:35:01 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/16 15:55:53 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,13 @@ void	*start(void *struct_)
 			return (NULL);
 
 			///////////////////
+			// if (phil->num == 2)
+			// {
 			// pthread_mutex_lock(phil->printing);
-			//        printf("/////////////////time:%ld phil_num:%d l_ptr:%p r_ptr:%p\n",
-			// 	          tmp_micsec_AT(phil->t_start),phil->num, phil->left, phil->right);
+			//        printf("//////////////time:%lu phil_num:%d die:%d\n",
+			// 	          actual_time(phil->t_start),phil->num, phil->die_fl);
 			// pthread_mutex_unlock(phil->printing);
+			// }
 			///////////////////
 
 		if ((phil->num % 2) != 0)
@@ -144,16 +147,17 @@ void	*start(void *struct_)
 		if (eat_time && eat_time != -1)
 		{
 			eat_time--;
-			pthread_mutex_lock(phil->printing);
-			printf("~~~~~~~~phil_num:%d      %d\n", phil->num, eat_time);
-			pthread_mutex_unlock(phil->printing);
+			// pthread_mutex_lock(phil->printing);
+			// printf("~~~~~~~~~~~phil_num:%d t_eat:%d\n",phil->num, eat_time);
+			// pthread_mutex_unlock(phil->printing);
 		}
 	}
-	phil->die_fl = 1;
-	while (phil->die_fl != END)
-	{
-		///////
-	}
+	phil->end_fl = 1;
+	// pthread_mutex_lock(phil->printing);
+	// 	printf("~~~~~~~~~~~phil_num:%d\n",phil->num);
+	// pthread_mutex_unlock(phil->printing);
+	while (phil->end_fl != END)
+		usleep (500);
 	return (phil);
 }
 
@@ -170,32 +174,43 @@ int	main_thread(t_philo *philo)
 	{
 		while (i < phil_num)
 		{
-			if (actual_time(&((philo + i)->t_eat)) >= (philo + i)->argums->die_time)
+			if (actual_time(&((philo + i)->t_eat)) >= (unsigned long)((philo + i)->argums->die_time))
 			{
+
 				while (j < phil_num)
 				{
 					(philo + j)->die_fl = DIE;
+			///////////////////
+			if ((philo + i)->num == 2)
+			       printf("___________time:%lu phil_num:%d\n",
+				          actual_time((philo + i)->t_start),(philo + i)->num);
+			///////////////////
 					j++;
 				}
-				printf("time:%ld phil_num:%d died\n", actual_time(philo->t_start),(philo + i)->num);
-				return (DIE);
+				// printf ("phil_num:%d   end_fl:%d\n", i, (philo + i)->end_fl);
+				if ((philo + i)->end_fl != 1 && (philo + i)->end_fl != END)
+				{
+					printf("time:%lu phil_num:%d died\n", actual_time(philo->t_start),(philo + i)->num);
+					return (DIE);
+				}
+				j = 0;
 			}
-			if ((philo + i)->die_fl)
+			if ((philo + i)->end_fl == 1)
 			{
-				while (j < phil_num && (philo + j)->die_fl)
+				while (j < phil_num && (philo + j)->end_fl == 1)
 					j++;
 				if (j == phil_num)
 				{
 					j = 0;
 					while (j < phil_num)
-						(philo + j++)->die_fl = END;
+						(philo + j++)->end_fl = END;
 					return (END);
 				}
 				j = 0;
 			}
 			i++;
 		}
-		usleep (100);
+		ft_usleep (10);
 		i = 0;
 	}
 	return (0);
@@ -246,6 +261,7 @@ int	initialization(t_argv *argums)
 	philo_arr[i].t_start = &cur_time;
 	philo_arr[i].t_eat = cur_time;
 	philo_arr[i].die_fl = 0;
+	philo_arr[i].end_fl = 0;
 	(philo_arr + i)->printing = &print_fl;
 	pthread_mutex_init((philo_arr + i)->printing, NULL);
 	i++;
@@ -261,6 +277,7 @@ int	initialization(t_argv *argums)
 		philo_arr[i].t_start = &cur_time;
 		philo_arr[i].t_eat = cur_time;
 		philo_arr[i].die_fl = 0;
+		philo_arr[i].end_fl = 0;
 		i++;
 	}
 	if (open_threads(philo_arr) == DIE)

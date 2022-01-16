@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:55:09 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/15 14:58:17 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/16 15:57:51 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	do_take_fork(t_philo *phil, char fl)
 {
 	char	*cust_print;
 
-
 	if (fl =='L')
 		cust_print = "left";
 	else
@@ -24,7 +23,7 @@ int	do_take_fork(t_philo *phil, char fl)
 	if (do_check_die(phil) == DIE)
 		return (DIE);
 	pthread_mutex_lock(phil->printing);
-	printf("time:%ld phil_num:%d has taken a %s fork\n",
+	printf("time:%lu phil_num:%d has taken a %s fork\n",
 			actual_time(phil->t_start),phil->num, cust_print);
 	pthread_mutex_unlock(phil->printing);
 	if (do_check_die(phil) == DIE)
@@ -38,7 +37,7 @@ int	do_eat(t_philo *phil)
 		return (DIE);
 	gettimeofday(&(phil->t_eat), NULL);
 	pthread_mutex_lock(phil->printing);
-	printf("time:%ld phil_num:%d is eating\n", actual_time(phil->t_start),phil->num);
+	printf("time:%lu phil_num:%d is eating\n", actual_time(phil->t_start),phil->num);
 	pthread_mutex_unlock(phil->printing);
 	return (0);
 }
@@ -48,9 +47,19 @@ int	do_sleeping(t_philo *phil)
 	if (do_check_die(phil) == DIE)
 		return (DIE);
 	pthread_mutex_lock(phil->printing);
-	printf("time:%ld phil_num:%d is sleeping\n", actual_time(phil->t_start),phil->num);
+	printf("time:%lu phil_num:%d is sleeping\n", actual_time(phil->t_start),phil->num);
 	pthread_mutex_unlock(phil->printing);
 	ft_usleep(phil->argums->sleep_time);
+	///////////////////
+	if (phil->num == 2)
+	{
+	pthread_mutex_lock(phil->printing);
+			printf("**********time:%lu phil_num:%d die:%d\n",
+					actual_time(phil->t_start),phil->num, phil->die_fl);
+	pthread_mutex_unlock(phil->printing);
+	}
+	///////////////////
+
 	if (do_check_die(phil) == DIE)
 		return (DIE);
 	return (0);
@@ -61,7 +70,7 @@ int	do_thinking(t_philo *phil)
 	if (do_check_die(phil) == DIE)
 		return (DIE);
 	pthread_mutex_lock(phil->printing);
-	printf("time:%ld phil_num:%d is thinking\n", actual_time(phil->t_start),phil->num);
+	printf("time:%lu phil_num:%d is thinking\n", actual_time(phil->t_start),phil->num);
 	pthread_mutex_unlock(phil->printing);
 	return (0);
 }
@@ -70,6 +79,12 @@ int	do_check_die(t_philo *phil)
 {
 	if (phil->die_fl == DIE)
 	{
+		////////////////////////////////
+		// pthread_mutex_lock(phil->printing);
+		// 	printf("/////////////////time:%lu phil_num:%d\n",
+		// 			actual_time(phil->t_start),phil->num);
+		// pthread_mutex_unlock(phil->printing);
+		////////////////////////////////
 		return (DIE);
 	}
 	return (0);

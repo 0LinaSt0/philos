@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 18:03:52 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/15 20:32:35 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/16 13:19:02 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PHILO_H
 
 # define DIE -1
-# define END 0
+# define END 2
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -55,21 +55,22 @@ typedef struct	s_philo
 	struct timeval	*t_start;
 	struct timeval	t_eat;
 	int				die_fl;
+	int				end_fl;
 }					t_philo;
 
 
 /*doing_statuses*/
 
-int		do_take_fork(t_philo *phil, char fl);
-int		do_eat(t_philo *phil);
-int		do_sleeping(t_philo *phil);
-int		do_thinking(t_philo *phil);
-int		do_check_die(t_philo *phil);
+int				do_take_fork(t_philo *phil, char fl);
+int				do_eat(t_philo *phil);
+int				do_sleeping(t_philo *phil);
+int				do_thinking(t_philo *phil);
+int				do_check_die(t_philo *phil);
 
 /*utils*/
 
-long	actual_time(struct timeval *start_time);
-void	ft_usleep(int mlsec);
-long	tmp_micsec_AT(struct timeval *start_time);//tmp: del after
+unsigned long	actual_time(struct timeval *start_time);
+void			ft_usleep(int mlsec);
+long			tmp_micsec_AT(struct timeval *start_time);//tmp: del after
 
 #endif
