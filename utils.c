@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:55:13 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/16 13:10:59 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:18:28 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ unsigned long	actual_time(struct timeval *start_time)
 	struct timeval	cur_time;
 
 	gettimeofday(&cur_time, NULL);
-	return ((unsigned long)((cur_time.tv_usec - start_time->tv_usec) / 1000)
+	if (cur_time.tv_usec >= start_time->tv_usec)
+		return ((unsigned long)((cur_time.tv_usec - start_time->tv_usec) / 1000)
+			+ (unsigned long)((cur_time.tv_sec - start_time->tv_sec) * 1000));
+	else
+		return ((unsigned long)((start_time->tv_usec - cur_time.tv_usec) / 1000)
 			+ (unsigned long)((cur_time.tv_sec - start_time->tv_sec) * 1000));
 }
 

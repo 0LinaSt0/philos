@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:21:54 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/18 13:27:42 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/18 15:01:45 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ int	main_thread(t_philo *philo)
 		ft_usleep (10);
 		i = 0;
 	}
-	return (0);
+	return (END);
 }
 
 int	open_threads(t_philo *philos)
