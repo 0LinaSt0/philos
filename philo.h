@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 18:03:52 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/16 13:19:02 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/18 13:36:23 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@
 
 typedef struct	s_argv
 {
-	int	phil_num; /*and mutex_num too*/
-	int	die_time;
-	int	eat_time;
-	int	sleep_time;
-	int	how_much_eats; /*number_of_times_each_philosopher_must_eat: if -1 => without this argument*/
+	int				phil_num; /*and mutex_num too*/
+	int				die_time;
+	int				eat_time;
+	int				sleep_time;
+	int				how_much_eats; /*number_of_times_each_philosopher_must_eat: if -1 => without this argument*/
+	struct timeval	*t_start;
 }		t_argv;
 
 typedef struct	s_philo
@@ -52,10 +53,10 @@ typedef struct	s_philo
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*printing;
 	t_argv			*argums;
-	struct timeval	*t_start;
 	struct timeval	t_eat;
 	int				die_fl;
 	int				end_fl;
+	int				come_fl;
 }					t_philo;
 
 
