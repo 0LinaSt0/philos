@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 18:03:52 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/18 13:36:23 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/20 18:55:24 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int				do_check_die(t_philo *phil);
 
 /*utils*/
 
-unsigned long	actual_time(struct timeval *start_time);
+long	actual_time(struct timeval *start_time);
 void			ft_usleep(int mlsec);
 long			tmp_micsec_AT(struct timeval *start_time);//tmp: del after
 

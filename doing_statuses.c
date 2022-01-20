@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:55:09 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/18 13:27:54 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/20 19:15:54 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	do_eat(t_philo *phil)
 	pthread_mutex_lock(phil->printing);
 	printf("time:%lu phil_num:%d is eating\n", actual_time(phil->argums->t_start),phil->num);
 	pthread_mutex_unlock(phil->printing);
+	if (do_check_die(phil) == DIE)
+		return (DIE);
 	return (0);
 }
 
@@ -51,13 +53,10 @@ int	do_sleeping(t_philo *phil)
 	pthread_mutex_unlock(phil->printing);
 	ft_usleep(phil->argums->sleep_time);
 	///////////////////
-	// if (phil->num == 2)
-	// {
 	// pthread_mutex_lock(phil->printing);
 	// 		printf("**********time:%lu phil_num:%d die:%d\n",
 	// 				actual_time(phil->argums->t_start),phil->num, phil->die_fl);
 	// pthread_mutex_unlock(phil->printing);
-	// }
 	///////////////////
 
 	if (do_check_die(phil) == DIE)
@@ -72,6 +71,8 @@ int	do_thinking(t_philo *phil)
 	pthread_mutex_lock(phil->printing);
 	printf("time:%lu phil_num:%d is thinking\n", actual_time(phil->argums->t_start),phil->num);
 	pthread_mutex_unlock(phil->printing);
+	if (do_check_die(phil) == DIE)
+		return (DIE);
 	return (0);
 }
 

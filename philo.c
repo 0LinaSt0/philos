@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:21:54 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/18 15:01:45 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/20 19:46:36 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	*start(void *struct_)
 
 	phil = (t_philo *)struct_;
 	eat_time = phil->argums->how_much_eats;
-	while (1 && eat_time)
+	while (1 && phil->end_fl != END)
 	{
 		if (do_thinking(phil) == DIE)
 			return (NULL);
@@ -105,14 +105,14 @@ void	*start(void *struct_)
 			if (do_eat(phil) == DIE)
 				return (NULL);
 			ft_usleep(phil->argums->eat_time);
+			// ///////////////////
+			// pthread_mutex_lock(phil->printing);
+			//        printf("~~~~~~~~~~~time:%ld phil_num:%d \n",
+			// 	          actual_time(phil->argums->t_start),phil->num);
+			// pthread_mutex_unlock(phil->printing);
+			// //////////////////
 			pthread_mutex_unlock(phil->left);
 			pthread_mutex_unlock(phil->right);
-			///////////////////
-			// pthread_mutex_lock(phil->printing);
-			//        printf("_~~~~~~~~~~~time:%ld phil_num:%d l_ptr:%p r_ptr:%p\n",
-			// 	          tmp_micsec_AT(phil->t_start),phil->num, phil->left, phil->right);
-			// pthread_mutex_unlock(phil->printing);
-			///////////////////
 		}
 		else
 		{
@@ -135,12 +135,6 @@ void	*start(void *struct_)
 			ft_usleep(phil->argums->eat_time);
 			pthread_mutex_unlock(phil->right);
 			pthread_mutex_unlock(phil->left);
-			///////////////////
-			// pthread_mutex_lock(phil->printing);
-			//        printf("~~~~~~~~~~~time:%ld phil_num:%d l_ptr:%p r_ptr:%p\n",
-			// 	          tmp_micsec_AT(phil->t_start),phil->num, phil->left, phil->right);
-			// pthread_mutex_unlock(phil->printing);
-			//////////////////
 		}
 		if (do_sleeping(phil) == DIE)
 			return (NULL);
@@ -151,17 +145,19 @@ void	*start(void *struct_)
 			// printf("~~~~~~~~~~~phil_num:%d t_eat:%d\n",phil->num, eat_time);
 			// pthread_mutex_unlock(phil->printing);
 		}
+		if (eat_time == 0)
+			phil->end_fl = 1;
 	}
-	phil->end_fl = 1;
 	// pthread_mutex_lock(phil->printing);
 	// 	printf("~~~~~~~~~~~phil_num:%d\n",phil->num);
 	// pthread_mutex_unlock(phil->printing);
-	while (phil->end_fl != END)
-	{
-		// if (phil->num == 2)
-			// printf ("dadadadaa\n");
-		usleep (500);
-	}
+
+	// while (phil->end_fl != END)
+	// {
+	// 	// if (phil->num == 2)
+	// 		// printf ("dadadadaa\n");
+	// 	usleep (500);
+	// }
 	return (phil);
 }
 
@@ -178,8 +174,8 @@ int	main_thread(t_philo *philo)
 	{
 		while (i < phil_num)
 		{
-			if (actual_time(&((philo + i)->t_eat)) >= (unsigned long)((philo + i)->argums->die_time)
-					&& !(philo + i)->come_fl)
+			if (actual_time(&((philo + i)->t_eat)) >= ((philo + i)->argums->die_time)
+					)//&& !(philo + i)->come_fl)
 			{
 
 				while (j < phil_num)
@@ -200,10 +196,11 @@ int	main_thread(t_philo *philo)
 				}
 				j = 0;
 			}
-			if (!(philo + i)->come_fl && (philo + i)->end_fl == 1)
+			if ((philo + i)->end_fl == 1)
 			{
+				// printf ("dfsdf\n");
 				// printf ("...time:%lu phil_num:%d\n", actual_time((philo + i)->argums->t_start),(philo + i)->num);
-				(philo + i)->come_fl = 1;
+				// (philo + i)->come_fl = 1;
 				while (j < phil_num && (philo + j)->end_fl == 1)
 					j++;
 				if (j == phil_num)
@@ -217,7 +214,7 @@ int	main_thread(t_philo *philo)
 			}
 			i++;
 		}
-		ft_usleep (10);
+		usleep (10);
 		i = 0;
 	}
 	return (END);
