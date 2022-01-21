@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:21:54 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/20 19:46:36 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/21 20:38:06 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ int	main_thread(t_philo *philo)
 		while (i < phil_num)
 		{
 			if (actual_time(&((philo + i)->t_eat)) >= ((philo + i)->argums->die_time)
-					)//&& !(philo + i)->come_fl)
+					&& !(philo + i)->come_fl)
 			{
 
 				while (j < phil_num)
@@ -191,16 +191,16 @@ int	main_thread(t_philo *philo)
 				// printf ("phil_num:%d   end_fl:%d\n", i, (philo + i)->end_fl);
 				if ((philo + i)->end_fl != 1 && (philo + i)->end_fl != END)
 				{
-					printf("time:%lu phil_num:%d died\n", actual_time(philo->argums->t_start),(philo + i)->num);
+					printf("time:%ld phil_num:%d died\n", actual_time(philo->argums->t_start),(philo + i)->num);
 					return (DIE);
 				}
 				j = 0;
 			}
-			if ((philo + i)->end_fl == 1)
+			if ((philo + i)->end_fl == 1 && !(philo + i)->come_fl)
 			{
 				// printf ("dfsdf\n");
 				// printf ("...time:%lu phil_num:%d\n", actual_time((philo + i)->argums->t_start),(philo + i)->num);
-				// (philo + i)->come_fl = 1;
+				(philo + i)->come_fl = 1;
 				while (j < phil_num && (philo + j)->end_fl == 1)
 					j++;
 				if (j == phil_num)
@@ -241,45 +241,53 @@ int	open_threads(t_philo *philos)
 
 int	initialization(t_argv *argums)
 {
-	struct timeval	cur_time;
+	struct timeval	*cur_time;
 	pthread_mutex_t	*mute_arr;
-	pthread_mutex_t	print_fl;
+	pthread_mutex_t	*print_fl;
 	t_philo			*philo_arr;
 	int				i;
 
 	i = 0;
+	print_fl = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	mute_arr = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * argums->phil_num);
 	philo_arr = (t_philo *)malloc(sizeof(t_philo) * argums->phil_num);
-	if (!mute_arr || !philo_arr)
+	cur_time = (struct timeval *)malloc(sizeof(struct timeval));
+	if (!cur_time || !mute_arr || !philo_arr || !print_fl)
 	{
 		free(mute_arr);
 		free(philo_arr);
+		free(cur_time);
+		free(print_fl);
 		return (DIE);
 	}
-	argums->t_start = &cur_time;
-	gettimeofday(&cur_time, NULL);
+	pthread_mutex_init(print_fl, NULL);
+	gettimeofday(cur_time, NULL);
+
+	argums->t_start = cur_time;
 	pthread_mutex_init(&(mute_arr[i]), NULL);
 	philo_arr[i].num = i + 1;
 	philo_arr[i].right = &(mute_arr[argums->phil_num - 1]);
 	philo_arr[i].left = &(mute_arr[i]);
-	philo_arr[i].argums = argums;argums->t_start = &cur_time;
-	philo_arr[i].t_eat = cur_time;
+	philo_arr[i].argums = argums;
+	// philo_arr[i].t_eat = *cur_time;
+	gettimeofday(&philo_arr[i].t_eat, NULL);
 	philo_arr[i].die_fl = 0;
 	philo_arr[i].end_fl = 0;
 	philo_arr[i].come_fl = 0;
-	(philo_arr + i)->printing = &print_fl;
-	pthread_mutex_init((philo_arr + i)->printing, NULL);
+	(philo_arr + i)->printing = print_fl;
+	// pthread_mutex_init((philo_arr + i)->printing, NULL);
 	i++;
 	while (i < argums->phil_num)
 	{
 		pthread_mutex_init(&(mute_arr[i]), NULL);
-		(philo_arr + i)->printing = &print_fl;
-		pthread_mutex_init((philo_arr + i)->printing, NULL);
+		(philo_arr + i)->printing = print_fl;
+		// pthread_mutex_init((philo_arr + i)->printing, NULL);
 		philo_arr[i].num = i + 1;
 		philo_arr[i].right = &(mute_arr[i - 1]);
 		philo_arr[i].left = &(mute_arr[i]);
 		philo_arr[i].argums = argums;
-		philo_arr[i].t_eat = cur_time;
+		// philo_arr[i].t_eat = *cur_time;
+		gettimeofday(&philo_arr[i].t_eat, NULL);
 		philo_arr[i].die_fl = 0;
 		philo_arr[i].end_fl = 0;
 		philo_arr[i].come_fl = 0;
@@ -299,9 +307,12 @@ int	initialization(t_argv *argums)
 
 int	main (int argc, char **argv)
 {
-		t_argv	argums;
+	t_argv	*argums;
 
-	if (char_to_num(argc, argv, &argums) == DIE || initialization(&argums) == DIE)
+	argums = (t_argv *)malloc(sizeof(t_argv));
+	if (!argums)
+		return (DIE);
+	if (char_to_num(argc, argv, argums) == DIE || initialization(argums) == DIE)
 		return (DIE);
 
 	// printf ("%d\n", argums.phil_num);
@@ -312,5 +323,5 @@ int	main (int argc, char **argv)
 	// while (){
 	// 	pthread_mutexattr_init(arr[i]);
 	// }0
-
+    return (END);
 }

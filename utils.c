@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:55:13 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/20 19:16:37 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/21 20:20:14 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,23 @@
 long	actual_time(struct timeval *start_time)
 {
 	struct timeval	cur_time;
-	long			mic_sec;
-	long			sec;
+	// long			mic_sec;
+	// long			sec;
 
 	gettimeofday(&cur_time, NULL);
-	mic_sec = (long)(cur_time.tv_usec - start_time->tv_usec);
-	sec = (long)(cur_time.tv_sec - start_time->tv_sec);
-		return ((mic_sec / 1000) + (sec * 1000));
+	// mic_sec = (long)(cur_time.tv_usec - start_time->tv_usec);
+	// sec = (long)(cur_time.tv_sec - start_time->tv_sec);
+	// 	return ((mic_sec / 1000) + (sec * 1000));
+
+
+	// printf("\tcurrent time: %p\n", &cur_time);
+	// printf("\tstart time: %p\n", start_time);
+	return ((cur_time.tv_sec - start_time->tv_sec) * 1000000 + ((cur_time.tv_usec - start_time->tv_usec))) / 1000;
+
+
+	// long long sec = (cur_time.tv_sec - start_time->tv_sec) * 1000000;
+	// long long usec = cur_time.tv_usec - start_time->tv_usec;
+	// return (sec + usec) / 1000;
 }
 
 long	tmp_micsec_AT(struct timeval *start_time)

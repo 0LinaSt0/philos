@@ -9,182 +9,64 @@ time:0 phil_num:3 has taken a left fork
 time:0 phil_num:3 is eating
 time:0 phil_num:4 is thinking
 time:0 phil_num:5 is thinking
-time:200 phil_num:1 is sleeping
-time:200 phil_num:5 has taken a right fork
-time:200 phil_num:5 has taken a left fork
-time:200 phil_num:5 is eating
+time:0 phil_num:5 has taken a right fork
+time:0 phil_num:5 has taken a left fork
+time:0 phil_num:5 is eating
+time:0 phil_num:6 is thinking
+time:0 phil_num:7 is thinking
+time:0 phil_num:7 has taken a right fork
+time:0 phil_num:7 has taken a left fork
+time:0 phil_num:7 is eating
+time:0 phil_num:8 is thinking
+time:0 phil_num:9 is thinking
+time:0 phil_num:9 has taken a right fork
+time:0 phil_num:9 has taken a left fork
+time:0 phil_num:9 is eating
+time:0 phil_num:10 is thinking
+time:0 phil_num:11 is thinking
 time:200 phil_num:3 is sleeping
+time:200 phil_num:1 is sleeping
+time:200 phil_num:11 has taken a right fork
+time:200 phil_num:5 is sleeping
+time:200 phil_num:9 is sleeping
+time:200 phil_num:11 has taken a left fork
+time:200 phil_num:11 is eating
+time:200 phil_num:7 is sleeping
+time:200 phil_num:4 has taken a left fork
+time:200 phil_num:4 has taken a right fork
+time:200 phil_num:4 is eating
 time:200 phil_num:2 has taken a left fork
 time:200 phil_num:2 has taken a right fork
 time:200 phil_num:2 is eating
-time:400 phil_num:3 is thinking
-time:400 phil_num:5 is sleeping
-time:400 phil_num:4 has taken a left fork
-time:400 phil_num:4 has taken a right fork
-time:400 phil_num:4 is eating
+time:200 phil_num:6 has taken a left fork
+time:200 phil_num:6 has taken a right fork
+time:200 phil_num:6 is eating
+time:200 phil_num:8 has taken a left fork
+time:200 phil_num:8 has taken a right fork
+time:200 phil_num:8 is eating
 time:400 phil_num:1 is thinking
-time:401 phil_num:2 is sleeping
-time:401 phil_num:1 has taken a right fork
-time:401 phil_num:1 has taken a left fork
-time:401 phil_num:1 is eating
-time:601 phil_num:4 is sleeping
-time:601 phil_num:3 has taken a right fork
-time:601 phil_num:3 has taken a left fork
-time:601 phil_num:3 is eating
-time:601 phil_num:5 is thinking
-time:601 phil_num:1 is sleeping
-time:601 phil_num:5 has taken a right fork
-time:601 phil_num:5 has taken a left fork
-time:601 phil_num:5 is eating
-time:601 phil_num:2 is thinking
-time:801 phil_num:4 is thinking
-time:801 phil_num:2 has taken a left fork
-time:801 phil_num:2 has taken a right fork
-time:801 phil_num:2 is eating
-time:801 phil_num:3 is sleeping
-time:802 phil_num:1 is thinking
-time:802 phil_num:5 is sleeping
-time:802 phil_num:4 has taken a left fork
-time:802 phil_num:4 has taken a right fork
-time:802 phil_num:4 is eating
-time:1000 phil_num:2 is sleeping
-time:1000 phil_num:1 has taken a right fork
-time:1000 phil_num:1 has taken a left fork
-time:1000 phil_num:1 is eating
-time:1001 phil_num:5 is thinking
-time:1001 phil_num:3 is thinking
-time:1001 phil_num:4 is sleeping
-time:1001 phil_num:3 has taken a right fork
-time:1001 phil_num:3 has taken a left fork
-time:1001 phil_num:3 is eating
-time:1200 phil_num:1 is sleeping
-time:1200 phil_num:5 has taken a right fork
-time:1200 phil_num:5 has taken a left fork
-time:1200 phil_num:5 is eating
-time:1201 phil_num:2 is thinking
-time:1201 phil_num:3 is sleeping
-time:1201 phil_num:2 has taken a left fork
-time:1201 phil_num:2 has taken a right fork
-time:1201 phil_num:2 is eating
-time:1202 phil_num:4 is thinking
-time:1401 phil_num:1 is thinking
-time:1401 phil_num:5 is sleeping
-time:1401 phil_num:4 has taken a left fork
-time:1401 phil_num:4 has taken a right fork
-time:1401 phil_num:4 is eating
-time:1402 phil_num:3 is thinking
-time:1402 phil_num:2 is sleeping
-time:1402 phil_num:1 has taken a right fork
-time:1402 phil_num:1 has taken a left fork
-time:1402 phil_num:1 is eating
-time:1601 phil_num:4 is sleeping
-time:1601 phil_num:3 has taken a right fork
-time:1601 phil_num:3 has taken a left fork
-time:1601 phil_num:3 is eating
-time:1601 phil_num:5 is thinking
-time:1602 phil_num:2 is thinking
-time:1602 phil_num:1 is sleeping
-time:1602 phil_num:5 has taken a right fork
-time:1602 phil_num:5 has taken a left fork
-time:1602 phil_num:5 is eating
-time:1801 phil_num:4 is thinking
-time:1802 phil_num:3 is sleeping
-time:1802 phil_num:2 has taken a left fork
-time:1802 phil_num:2 has taken a right fork
-time:1802 phil_num:2 is eating
-time:1802 phil_num:5 is sleeping
-time:1802 phil_num:4 has taken a left fork
-time:1802 phil_num:4 has taken a right fork
-time:1802 phil_num:4 is eating
-time:1803 phil_num:1 is thinking
-time:2001 phil_num:3 is thinking
-time:2001 phil_num:2 is sleeping
-time:2001 phil_num:1 has taken a right fork
-time:2001 phil_num:1 has taken a left fork
-time:2001 phil_num:1 is eating
-time:2002 phil_num:4 is sleeping
-time:2002 phil_num:5 is thinking
-time:2002 phil_num:3 has taken a right fork
-time:2002 phil_num:3 has taken a left fork
-time:2002 phil_num:3 is eating
-time:2201 phil_num:2 is thinking
-time:2201 phil_num:5 has taken a right fork
-time:2201 phil_num:5 has taken a left fork
-time:2201 phil_num:5 is eating
-time:2201 phil_num:1 is sleeping
-time:2202 phil_num:4 is thinking
-time:2202 phil_num:3 is sleeping
-time:2202 phil_num:2 has taken a left fork
-time:2202 phil_num:2 has taken a right fork
-time:2202 phil_num:2 is eating
-time:2402 phil_num:1 is thinking
-time:2402 phil_num:5 is sleeping
-time:2402 phil_num:3 is thinking
-time:2402 phil_num:4 has taken a left fork
-time:2402 phil_num:4 has taken a right fork
-time:2402 phil_num:4 is eating
-time:2402 phil_num:2 is sleeping
-time:2402 phil_num:1 has taken a right fork
-time:2402 phil_num:1 has taken a left fork
-time:2402 phil_num:1 is eating
-time:2602 phil_num:5 is thinking
-time:2602 phil_num:4 is sleeping
-time:2602 phil_num:3 has taken a right fork
-time:2602 phil_num:3 has taken a left fork
-time:2602 phil_num:3 is eating
-time:2603 phil_num:2 is thinking
-time:2603 phil_num:1 is sleeping
-time:2603 phil_num:5 has taken a right fork
-time:2603 phil_num:5 has taken a left fork
-time:2603 phil_num:5 is eating
-time:2802 phil_num:3 is sleeping
-time:2802 phil_num:2 has taken a left fork
-time:2802 phil_num:2 has taken a right fork
-time:2802 phil_num:2 is eating
-time:2803 phil_num:4 is thinking
-time:2803 phil_num:1 is thinking
-time:2804 phil_num:5 is sleeping
-time:2804 phil_num:4 has taken a left fork
-time:2804 phil_num:4 has taken a right fork
-time:2804 phil_num:4 is eating
-time:3002 phil_num:3 is thinking
-time:3002 phil_num:2 is sleeping
-time:3002 phil_num:1 has taken a right fork
-time:3002 phil_num:1 has taken a left fork
-time:3002 phil_num:1 is eating
-time:3003 phil_num:4 is sleeping
-time:3003 phil_num:3 has taken a right fork
-time:3003 phil_num:3 has taken a left fork
-time:3003 phil_num:3 is eating
-time:3003 phil_num:5 is thinking
-time:3202 phil_num:1 is sleeping
-time:3202 phil_num:5 has taken a right fork
-time:3202 phil_num:5 has taken a left fork
-time:3202 phil_num:5 is eating
-time:3202 phil_num:2 is thinking
-time:3203 phil_num:4 is thinking
-time:3203 phil_num:3 is sleeping
-time:3203 phil_num:2 has taken a left fork
-time:3203 phil_num:2 has taken a right fork
-time:3203 phil_num:2 is eating
-time:3402 phil_num:1 is thinking
-time:3402 phil_num:5 is sleeping
-time:3402 phil_num:4 has taken a left fork
-time:3402 phil_num:4 has taken a right fork
-time:3402 phil_num:4 is eating
-time:3403 phil_num:3 is thinking
-time:3403 phil_num:2 is sleeping
-time:3403 phil_num:1 has taken a right fork
-time:3403 phil_num:1 has taken a left fork
-time:3403 phil_num:1 is eating
-time:3602 phil_num:5 is thinking
-time:3603 phil_num:4 is sleeping
-time:3603 phil_num:3 has taken a right fork
-time:3603 phil_num:3 has taken a left fork
-time:3603 phil_num:3 is eating
-time:3603 phil_num:1 is sleeping
-time:3603 phil_num:5 has taken a right fork
-time:3603 phil_num:5 has taken a left fork
-time:3603 phil_num:5 is eating
-time:3604 phil_num:2 is thinking
-time:3803 phil_num:4 is thinking
+time:400 phil_num:5 is thinking
+time:400 phil_num:9 is thinking
+time:400 phil_num:4 is sleeping
+time:400 phil_num:3 is thinking
+time:400 phil_num:2 is sleeping
+time:400 phil_num:3 has taken a right fork
+time:400 phil_num:3 has taken a left fork
+time:400 phil_num:3 is eating
+time:400 phil_num:6 is sleeping
+time:400 phil_num:5 has taken a right fork
+time:400 phil_num:1 has taken a right fork
+time:400 phil_num:11 is sleeping
+time:400 phil_num:1 has taken a left fork
+time:400 phil_num:1 is eating
+time:400 phil_num:10 has taken a left fork
+time:400 phil_num:10 has taken a right fork
+time:400 phil_num:10 is eating
+time:400 phil_num:5 has taken a left fork
+time:400 phil_num:5 is eating
+time:400 phil_num:7 is thinking
+time:401 phil_num:8 is sleeping
+time:401 phil_num:7 has taken a right fork
+time:401 phil_num:7 has taken a left fork
+time:401 phil_num:7 is eating
+time:590 phil_num:9 died
