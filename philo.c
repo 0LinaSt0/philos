@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:21:54 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/21 20:38:06 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/23 17:29:24 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,15 @@ void	*start(void *struct_)
 
 		if ((phil->num % 2) != 0)
 		{
-			pthread_mutex_lock(phil->left);
-			pthread_mutex_lock(phil->right);
 			///////////////////
 			// pthread_mutex_lock(phil->printing);
-			//        printf("~~~~~~~~~~~~~~~~time:%ld phil_num:%d l_ptr:%p r_ptr:%p\n",
-			// 	          tmp_micsec_AT(phil->t_start),phil->num, phil->left, phil->right);
+			//        printf("~~~~~~~~~~~~~~~~time:%ld phil_num:%d \n",
+			// 	          actual_time(phil->argums->t_start),phil->num);
 			// pthread_mutex_unlock(phil->printing);
 			///////////////////
+			usleep(300);
+			pthread_mutex_lock(phil->left);
+			pthread_mutex_lock(phil->right);
 			if (do_take_fork(phil, 'R') == DIE)
 				return (NULL);
 			if (do_take_fork(phil, 'L') == DIE)
@@ -116,9 +117,8 @@ void	*start(void *struct_)
 		}
 		else
 		{
-			usleep(300);
+			usleep(500);
 			pthread_mutex_lock(phil->right);
-			usleep(300);
 			pthread_mutex_lock(phil->left);
 			///////////////////
 			// pthread_mutex_lock(phil->printing);
