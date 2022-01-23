@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:21:54 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/23 17:29:24 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/23 20:15:39 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	*start(void *struct_)
 
 	phil = (t_philo *)struct_;
 	eat_time = phil->argums->how_much_eats;
-	while (1 && phil->end_fl != END)
+	while (phil->end_fl != END)
 	{
 		if (do_thinking(phil) == DIE)
 			return (NULL);
@@ -145,19 +145,11 @@ void	*start(void *struct_)
 			// printf("~~~~~~~~~~~phil_num:%d t_eat:%d\n",phil->num, eat_time);
 			// pthread_mutex_unlock(phil->printing);
 		}
-		if (eat_time == 0)
+		if (eat_time == 0 && phil->end_fl != END)
 			phil->end_fl = 1;
+	// printf ("nu:%d    phil->end_fl:%d\n", phil->num, phil->end_fl);
 	}
-	// pthread_mutex_lock(phil->printing);
-	// 	printf("~~~~~~~~~~~phil_num:%d\n",phil->num);
-	// pthread_mutex_unlock(phil->printing);
-
-	// while (phil->end_fl != END)
-	// {
-	// 	// if (phil->num == 2)
-	// 		// printf ("dadadadaa\n");
-	// 	usleep (500);
-	// }
+	phil->end_fl = 3;
 	return (phil);
 }
 
@@ -180,15 +172,8 @@ int	main_thread(t_philo *philo)
 
 				while (j < phil_num)
 				{
-					(philo + j)->die_fl = DIE;
-			///////////////////
-			// if ((philo + i)->num == 2 || (philo + i)->num == 4)
-			    //    printf("___________time:%lu phil_num:%d\n",
-				//           actual_time((philo + i)->argums->t_start),(philo + i)->num);
-			///////////////////
-					j++;
+					(philo + j++)->die_fl = DIE;
 				}
-				// printf ("phil_num:%d   end_fl:%d\n", i, (philo + i)->end_fl);
 				if ((philo + i)->end_fl != 1 && (philo + i)->end_fl != END)
 				{
 					printf("time:%ld phil_num:%d died\n", actual_time(philo->argums->t_start),(philo + i)->num);
@@ -198,8 +183,6 @@ int	main_thread(t_philo *philo)
 			}
 			if ((philo + i)->end_fl == 1 && !(philo + i)->come_fl)
 			{
-				// printf ("dfsdf\n");
-				// printf ("...time:%lu phil_num:%d\n", actual_time((philo + i)->argums->t_start),(philo + i)->num);
 				(philo + i)->come_fl = 1;
 				while (j < phil_num && (philo + j)->end_fl == 1)
 					j++;
@@ -207,8 +190,20 @@ int	main_thread(t_philo *philo)
 				{
 					j = 0;
 					while (j < phil_num)
-						(philo + j++)->end_fl = END;
-					return (END);
+					{
+						(philo + j)->end_fl = END;
+						// printf("j:%d      phiiiiiiiiiiiiiiiil:%d\n", j, (philo + j)->end_fl);
+						j++;
+					}
+					while (1)
+					{
+						j = 0;
+						while (j < phil_num && (philo + j)->end_fl == 3)
+							j++;
+						if (j == phil_num)
+							return (END);
+					}
+					return (DIE);
 				}
 				j = 0;
 			}
@@ -219,25 +214,49 @@ int	main_thread(t_philo *philo)
 	}
 	return (END);
 }
+void	free_arrs(struct timeval *cur_time, pthread_mutex_t *mute_arr,
+			pthread_mutex_t *print_fl, t_philo *philo_arr)
+{
+	free(mute_arr);
+	free(philo_arr);
+	free(cur_time);
+	free(print_fl);
+}
 
-int	open_threads(t_philo *philos)
+void	free_destroy_mutexs(pthread_mutex_t *mute_arr, int c)
 {
 	int	i;
 
 	i = 0;
-	while (i < philos->argums->phil_num)
+	while (i < c)
 	{
-		pthread_create(&(philos + i)->thread, NULL, start, (philos + i));
-		pthread_detach((philos + i)->thread);
+		pthread_mutex_destroy(&(mute_arr[i]));
 		i++;
 	}
-	if (main_thread(philos) == DIE)
+}
+
+int	open_threads(t_philo *philos)
+{
+	int	i;
+	int	break_fl;
+
+	break_fl = 0;
+	i = 0;
+	while (i < philos->argums->phil_num)
 	{
-		//free all
-		return (DIE);
+		if (pthread_create(&(philos + i)->thread, NULL, start, (philos + i)) != 0
+			|| pthread_detach((philos + i)->thread) != 0)
+		{
+			break_fl = 1;
+			break ;
+		}
+		i++;
 	}
+	if (!break_fl)
+		main_thread(philos);
 	return (END);
 }
+
 
 int	initialization(t_argv *argums)
 {
@@ -254,54 +273,53 @@ int	initialization(t_argv *argums)
 	cur_time = (struct timeval *)malloc(sizeof(struct timeval));
 	if (!cur_time || !mute_arr || !philo_arr || !print_fl)
 	{
-		free(mute_arr);
-		free(philo_arr);
-		free(cur_time);
-		free(print_fl);
+		free_arrs(cur_time, mute_arr, print_fl, philo_arr);
 		return (DIE);
 	}
-	pthread_mutex_init(print_fl, NULL);
+	if ((pthread_mutex_init(print_fl, NULL) != 0) ||
+			(pthread_mutex_init(&(mute_arr[i]), NULL) != 0))
+	{
+		free_arrs(cur_time, mute_arr, print_fl, philo_arr);
+		return (DIE);
+	}
 	gettimeofday(cur_time, NULL);
-
 	argums->t_start = cur_time;
-	pthread_mutex_init(&(mute_arr[i]), NULL);
 	philo_arr[i].num = i + 1;
 	philo_arr[i].right = &(mute_arr[argums->phil_num - 1]);
 	philo_arr[i].left = &(mute_arr[i]);
 	philo_arr[i].argums = argums;
-	// philo_arr[i].t_eat = *cur_time;
 	gettimeofday(&philo_arr[i].t_eat, NULL);
 	philo_arr[i].die_fl = 0;
 	philo_arr[i].end_fl = 0;
 	philo_arr[i].come_fl = 0;
 	(philo_arr + i)->printing = print_fl;
-	// pthread_mutex_init((philo_arr + i)->printing, NULL);
 	i++;
 	while (i < argums->phil_num)
 	{
-		pthread_mutex_init(&(mute_arr[i]), NULL);
+		if (pthread_mutex_init(&(mute_arr[i]), NULL) != 0)
+		{
+			free_destroy_mutexs(mute_arr, i);
+			pthread_mutex_destroy(print_fl);
+			free_arrs(cur_time, mute_arr, print_fl, philo_arr);
+			return (DIE);
+		}
 		(philo_arr + i)->printing = print_fl;
-		// pthread_mutex_init((philo_arr + i)->printing, NULL);
 		philo_arr[i].num = i + 1;
 		philo_arr[i].right = &(mute_arr[i - 1]);
 		philo_arr[i].left = &(mute_arr[i]);
 		philo_arr[i].argums = argums;
-		// philo_arr[i].t_eat = *cur_time;
 		gettimeofday(&philo_arr[i].t_eat, NULL);
 		philo_arr[i].die_fl = 0;
 		philo_arr[i].end_fl = 0;
 		philo_arr[i].come_fl = 0;
 		i++;
 	}
-	if (open_threads(philo_arr) == DIE)
-		return (DIE);
-	// return (0);
-	// for(int i=0; i<argums->phil_num; i++){
-	// 	printf("#:%d  -> %p\n", i, mute_arr + i);
-	// }
-	// for(int i=0; i<argums->phil_num; i++){
-	// 	printf("num:%d     ->     R - %p     L - %p\n", philo_arr[i].num, philo_arr[i].right, philo_arr[i].left);
-	// }
+	open_threads(philo_arr);
+
+	///////free///////
+	free_destroy_mutexs(mute_arr, i);
+	pthread_mutex_destroy(print_fl);
+	free_arrs(cur_time, mute_arr, print_fl, philo_arr);
 	return (END);
 }
 
@@ -312,16 +330,10 @@ int	main (int argc, char **argv)
 	argums = (t_argv *)malloc(sizeof(t_argv));
 	if (!argums)
 		return (DIE);
-	if (char_to_num(argc, argv, argums) == DIE || initialization(argums) == DIE)
-		return (DIE);
-
-	// printf ("%d\n", argums.phil_num);
-	// printf ("%d\n", argums.die_time);
-	// printf ("%d\n", argums.eat_time);
-	// printf ("%d\n", argums.sleep_time);
-	// printf ("%d\n", argums.how_much_eats);
-	// while (){
-	// 	pthread_mutexattr_init(arr[i]);
-	// }0
-    return (END);
+	if (char_to_num(argc, argv, argums) != DIE)
+	{
+		initialization(argums);
+	}
+	free(argums);
+    return (DIE);
 }
