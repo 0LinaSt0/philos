@@ -60,6 +60,21 @@ typedef struct	s_philo
 }					t_philo;
 
 
+/*init_funcs*/
+
+int				init(t_argv *argums);
+static int		init_philos_structs1(pthread_mutex_t *mute_arr,
+					pthread_mutex_t *print_fl, t_philo *philo_arr);
+static void		init_philos_structs2(pthread_mutex_t *mute_arr,
+					pthread_mutex_t *print_fl, t_philo *philo_arr, int *i);
+
+/*philos_threads*/
+
+static void		eat_time_check(t_philo *phil, int *eat_time);
+static void		*for_even_philos(t_philo *phil);
+static void		*for_odd_philos(t_philo *phil);
+void			*philo_threads(void *struct_);
+
 /*doing_statuses*/
 
 int				do_take_fork(t_philo *phil, char fl);
@@ -70,8 +85,16 @@ int				do_check_die(t_philo *phil);
 
 /*utils*/
 
-long	actual_time(struct timeval *start_time);
+int				check_error(int argc, char **argv);
+int				char_to_num(int argc, char **argv, t_argv *argums);
+long			actual_time(struct timeval *start_time);
 void			ft_usleep(int mlsec);
-long			tmp_micsec_AT(struct timeval *start_time);//tmp: del after
 
+/*free_funcs*/
+
+void			free_arrs(struct timeval *cur_time, pthread_mutex_t *mute_arr,
+					pthread_mutex_t *print_fl, t_philo *philo_arr);
+void			free_destroy_mutexs(pthread_mutex_t *mute_arr, int c);
+void			free_all(struct timeval *cur_time, pthread_mutex_t *mute_arr,
+					pthread_mutex_t *print_fl, t_philo *philo_arr);
 #endif

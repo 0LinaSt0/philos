@@ -52,13 +52,6 @@ int	do_sleeping(t_philo *phil)
 	printf("time:%ld phil_num:%d is sleeping\n", actual_time(phil->argums->t_start),phil->num);
 	pthread_mutex_unlock(phil->printing);
 	ft_usleep(phil->argums->sleep_time);
-	///////////////////
-	// pthread_mutex_lock(phil->printing);
-	// 		printf("**********time:%lu phil_num:%d die:%d\n",
-	// 				actual_time(phil->argums->t_start),phil->num, phil->die_fl);
-	// pthread_mutex_unlock(phil->printing);
-	///////////////////
-
 	if (do_check_die(phil) == DIE)
 		return (DIE);
 	return (0);
@@ -80,12 +73,6 @@ int	do_check_die(t_philo *phil)
 {
 	if (phil->die_fl == DIE)
 	{
-		////////////////////////////////
-		// pthread_mutex_lock(phil->printing);
-		// 	printf("/////////////////time:%lu phil_num:%d\n",
-		// 			actual_time(phil->t_start),phil->num);
-		// pthread_mutex_unlock(phil->printing);
-		////////////////////////////////
 		return (DIE);
 	}
 	return (0);
