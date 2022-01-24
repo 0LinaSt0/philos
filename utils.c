@@ -6,12 +6,11 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:55:13 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/21 20:20:14 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:16:07 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 int	check_error(int argc, char **argv)
 {
@@ -73,8 +72,8 @@ long	actual_time(struct timeval *start_time)
 	struct timeval	cur_time;
 
 	gettimeofday(&cur_time, NULL);
-	return ((cur_time.tv_sec - start_time->tv_sec) * 1000000
-			+ ((cur_time.tv_usec - start_time->tv_usec))) / 1000;
+	return (((cur_time.tv_sec - start_time->tv_sec) * 1000000
+			+ ((cur_time.tv_usec - start_time->tv_usec))) / 1000);
 }
 
 void	ft_usleep(int mlsec)
@@ -89,4 +88,31 @@ void	ft_usleep(int mlsec)
 		usleep (500);
 		gettimeofday(&cur_time, NULL);
 	}
+}
+
+int	all_ened_check(t_philo *philo, char fl)
+{
+	int	j;
+	int	num;
+
+	j = 0;
+	num = (philo + j)->argums->phil_num;
+	while (1)
+	{
+		if (fl == 'e')
+		{
+			while (j < num && (philo + j)->end_fl == 3)
+				j++;
+			if (j == num)
+				return (END);
+		}
+		else if (fl == 'd')
+		{
+			while (j < num && (philo + j)->die_fl == -2)
+				j++;
+			if (j == num || num == 1)
+				return (END);
+		}
+	}
+	return (DIE);
 }

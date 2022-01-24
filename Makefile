@@ -6,13 +6,13 @@
 #    By: msalena <msalena@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/12 13:14:56 by msalena           #+#    #+#              #
-#    Updated: 2022/01/16 13:06:26 by msalena          ###   ########.fr        #
+#    Updated: 2022/01/24 19:12:51 by msalena          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 LIBDIR		= 	libft
 
-SRCS_PH		= 	 philo.c utils.c doing_statuses.c
+SRCS_PH		= 	 philo.c utils.c doing_statuses.c free_funcs.c philos_threads.c init_funcs.c
 
 OBJS_PH		= 	${SRCS_PH:.c=.o}
 

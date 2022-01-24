@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:55:09 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/21 20:11:48 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/24 19:56:43 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	do_take_fork(t_philo *phil, char fl)
 {
 	char	*cust_print;
 
-	if (fl =='L')
+	if (fl == 'L')
 		cust_print = "left";
 	else
 		cust_print = "right";
@@ -24,7 +24,7 @@ int	do_take_fork(t_philo *phil, char fl)
 		return (DIE);
 	pthread_mutex_lock(phil->printing);
 	printf("time:%ld phil_num:%d has taken a %s fork\n",
-			actual_time(phil->argums->t_start),phil->num, cust_print);
+		actual_time(phil->argums->t_start), phil->num, cust_print);
 	pthread_mutex_unlock(phil->printing);
 	if (do_check_die(phil) == DIE)
 		return (DIE);
@@ -37,7 +37,8 @@ int	do_eat(t_philo *phil)
 		return (DIE);
 	gettimeofday(&(phil->t_eat), NULL);
 	pthread_mutex_lock(phil->printing);
-	printf("time:%ld phil_num:%d is eating\n", actual_time(phil->argums->t_start),phil->num);
+	printf("time:%ld phil_num:%d is eating\n",
+		actual_time(phil->argums->t_start), phil->num);
 	pthread_mutex_unlock(phil->printing);
 	if (do_check_die(phil) == DIE)
 		return (DIE);
@@ -49,7 +50,8 @@ int	do_sleeping(t_philo *phil)
 	if (do_check_die(phil) == DIE)
 		return (DIE);
 	pthread_mutex_lock(phil->printing);
-	printf("time:%ld phil_num:%d is sleeping\n", actual_time(phil->argums->t_start),phil->num);
+	printf("time:%ld phil_num:%d is sleeping\n",
+		actual_time(phil->argums->t_start), phil->num);
 	pthread_mutex_unlock(phil->printing);
 	ft_usleep(phil->argums->sleep_time);
 	if (do_check_die(phil) == DIE)
@@ -62,7 +64,8 @@ int	do_thinking(t_philo *phil)
 	if (do_check_die(phil) == DIE)
 		return (DIE);
 	pthread_mutex_lock(phil->printing);
-	printf("time:%ld phil_num:%d is thinking\n", actual_time(phil->argums->t_start),phil->num);
+	printf("time:%ld phil_num:%d is thinking\n",
+		actual_time(phil->argums->t_start), phil->num);
 	pthread_mutex_unlock(phil->printing);
 	if (do_check_die(phil) == DIE)
 		return (DIE);
@@ -73,6 +76,7 @@ int	do_check_die(t_philo *phil)
 {
 	if (phil->die_fl == DIE)
 	{
+		phil->die_fl = -2;
 		return (DIE);
 	}
 	return (0);

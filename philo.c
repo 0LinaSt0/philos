@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:21:54 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/23 20:15:39 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:16:56 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,23 @@
 
 static int	death_check(t_philo *philo, int *i)
 {
-	int	j;
-	int	phil_num;
+	int		j;
+	int		phil_num;
+	long	time;
 
 	j = 0;
 	phil_num = (philo + *i)->argums->phil_num;
 	if (actual_time(&((philo + *i)->t_eat)) >= ((philo + *i)->argums->die_time)
-				&& !((philo + *i)->come_fl))
+		&& !((philo + *i)->come_fl))
 	{
 		while (j < phil_num)
 		{
 			(philo + j++)->die_fl = DIE;
 		}
+		time = actual_time(philo->argums->t_start);
 		if ((philo + *i)->end_fl != 1 && (philo + *i)->end_fl != END)
 		{
-			printf("time:%ld phil_num:%d died\n",
-				actual_time(philo->argums->t_start),(philo + *i)->num);
+			printf("time:%ld phil_num:%d died\n", time, (philo + *i)->num);
 			return (DIE);
 		}
 	}
@@ -56,14 +57,7 @@ static int	end_eating_check(t_philo *philo, int *i)
 				(philo + j)->end_fl = END;
 				j++;
 			}
-			while (1)
-			{
-				j = 0;
-				while (j < phil_num && (philo + j)->end_fl == 3)
-					j++;
-				if (j == phil_num)
-					return (END);
-			}
+			return (all_ened_check(philo, 'e'));
 			return (DIE);
 		}
 	}
@@ -81,47 +75,8 @@ int	main_thread(t_philo *philo)
 	{
 		while (i < phil_num)
 		{
-			// if (actual_time(&((philo + i)->t_eat)) >= ((philo + i)->argums->die_time)
-			// 		&& !(philo + i)->come_fl)
-			// {
-					// while (j < phil_num)
-					// {
-					// 	(philo + j++)->die_fl = DIE;
-					// }
-					// if ((philo + i)->end_fl != 1 && (philo + i)->end_fl != END)
-					// {
-					// 	printf("time:%ld phil_num:%d died\n", actual_time(philo->argums->t_start),(philo + i)->num);
-					// 	return (DIE);
-					// }
-					// j = 0;
-			// }
 			if (death_check(philo, &i) == DIE)
 				return (DIE);
-			// if ((philo + i)->end_fl == 1 && !(philo + i)->come_fl)
-			// {
-			// 	(philo + i)->come_fl = 1;
-			// 	while (j < phil_num && (philo + j)->end_fl == 1)
-			// 		j++;
-			// 	if (j == phil_num)
-			// 	{
-			// 		j = 0;
-			// 		while (j < phil_num)
-			// 		{
-			// 			(philo + j)->end_fl = END;
-			// 			j++;
-			// 		}
-			// 		while (1)
-			// 		{
-			// 			j = 0;
-			// 			while (j < phil_num && (philo + j)->end_fl == 3)
-			// 				j++;
-			// 			if (j == phil_num)
-			// 				return (END);
-			// 		}
-			// 		return (DIE);
-			// 	}
-			// 	j = 0;
-			// }
 			if (end_eating_check(philo, &i) == END)
 				return (END);
 			i++;
@@ -154,7 +109,7 @@ int	open_threads(t_philo *philos)
 	return (END);
 }
 
-int	main (int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_argv	*argums;
 
@@ -166,5 +121,5 @@ int	main (int argc, char **argv)
 		init(argums);
 	}
 	free(argums);
-    return (DIE);
+	return (DIE);
 }
