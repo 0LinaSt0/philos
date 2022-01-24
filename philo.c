@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:21:54 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/24 20:16:56 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:32:30 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ int	main(int argc, char **argv)
 	{
 		init(argums);
 	}
+	else
+		printf ("Error arguments: try again with other ones\n");
 	free(argums);
 	return (DIE);
 }

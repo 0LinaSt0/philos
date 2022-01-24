@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:55:13 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/24 20:16:07 by msalena          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:32:46 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,15 @@ int	check_error(int argc, char **argv)
 	int	i_str;
 
 	i_arr = 1;
-	if (argc != 5 && argc != 6)
-	{
-		printf ("Error arguments: try again with other ones\n");
+	if ((argc != 5 && argc != 6))
 		return (DIE);
-	}
 	while (argv[i_arr])
 	{
 		i_str = 0;
 		while (argv[i_arr][i_str])
 		{
 			if (!ft_isdigit(argv[i_arr][i_str]))
-			{
-				printf ("Error arguments: try again with other ones\n");
 				return (DIE);
-			}
 			i_str++;
 		}
 		i_arr++;
@@ -51,15 +45,16 @@ int	char_to_num(int argc, char **argv, t_argv *argums)
 		return (DIE);
 	argums->phil_num = ft_atoi(argv[1]);
 	if (argums->phil_num == 0)
-	{
-		printf ("Error arguments: try again with other ones\n");
 		return (DIE);
-	}
 	argums->die_time = ft_atoi(argv[2]);
 	argums->eat_time = ft_atoi(argv[3]);
 	argums->sleep_time = ft_atoi(argv[4]);
 	if (argc == 6)
+	{
 		argums->how_much_eats = ft_atoi(argv[5]);
+		if (argums->how_much_eats == 0)
+			return (DIE);
+	}
 	else
 		argums->how_much_eats = -1;
 	return (END);
