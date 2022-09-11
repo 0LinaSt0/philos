@@ -6,7 +6,7 @@
 #    By: msalena <msalena@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/12 13:14:56 by msalena           #+#    #+#              #
-#    Updated: 2022/01/24 19:12:51 by msalena          ###   ########.fr        #
+#    Updated: 2022/09/11 20:38:09 by msalena          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ GCC			= 	gcc -Wall -Wextra -Werror -g
 
 all:			c_for_libft $(NAME_PH)
 
-%.o:			%.c $(HDRS_PH)
+%.o:			%.c $(HDRS_PH) Makefile
 				$(GCC) -c $< -o $@
 
 $(NAME_PH): 	$(OBJS_PH) $(NAME_LIB) Makefile

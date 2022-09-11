@@ -19,14 +19,10 @@ NAME		= libft.a
 
 all:		${NAME}
 
-%.o:		%.c ${HDRS}
+%.o:		%.c ${HDRS} Makefile
 			${GCC} -c -o $@ $<
 
-$(NAME): 	${OBJS}
-			ar rcs ${NAME} ${OBJS}
-
-
-bonus:		${OBJS} ${OBJS_B}
+$(NAME): 	${OBJS} ${OBJS_B} Makefile
 			ar rcs ${NAME} ${OBJS} ${OBJS_B}
 
 

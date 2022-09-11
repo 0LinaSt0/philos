@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:55:13 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/24 20:32:46 by msalena          ###   ########.fr       */
+/*   Updated: 2022/09/11 20:37:32 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,6 @@ int	check_error(int argc, char **argv)
 
 int	char_to_num(int argc, char **argv, t_argv *argums)
 {
-	int	i_arr;
-	int	i_str;
-
-	i_arr = 0;
-	i_str = 0;
 	if (check_error(argc, argv) == DIE)
 		return (DIE);
 	argums->phil_num = ft_atoi(argv[1]);
