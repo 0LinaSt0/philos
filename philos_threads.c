@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 19:57:38 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/24 20:06:05 by msalena          ###   ########.fr       */
+/*   Updated: 2022/09/11 21:03:12 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,3 +82,4 @@ void	*philo_threads(void *struct_)
 	phil->end_fl = 3;
 	return (phil);
 }
+

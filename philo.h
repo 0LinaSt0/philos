@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 18:03:52 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/24 20:18:31 by msalena          ###   ########.fr       */
+/*   Updated: 2022/09/11 21:02:11 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,7 @@
 	time_to_eat
 	time_to_sleep
 	[number_of_times_each_philosopher_must_eat]
-
-	!!!!What happend if eat &/or sleep is/are 0?!!!!*/
-
-/*1 second == 1000 mlsecond
-1 microse == 0,001 mlsecond*/
+*/
 
 typedef struct s_argv
 {

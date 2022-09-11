@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:21:54 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/24 20:32:30 by msalena          ###   ########.fr       */
+/*   Updated: 2022/09/11 21:02:29 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,3 +125,4 @@ int	main(int argc, char **argv)
 	free(argums);
 	return (DIE);
 }
+

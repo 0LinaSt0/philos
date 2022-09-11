@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 17:55:13 by msalena           #+#    #+#             */
-/*   Updated: 2022/09/11 20:37:32 by msalena          ###   ########.fr       */
+/*   Updated: 2022/09/11 21:03:17 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,3 +106,4 @@ int	all_ened_check(t_philo *philo, char fl)
 	}
 	return (DIE);
 }
+

@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 19:55:41 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/24 19:55:42 by msalena          ###   ########.fr       */
+/*   Updated: 2022/09/11 21:03:04 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,4 @@ void	free_all(struct timeval *cur_time, pthread_mutex_t *mute_arr,
 	pthread_mutex_destroy(print_fl);
 	free_arrs(cur_time, mute_arr, print_fl, philo_arr);
 }
+

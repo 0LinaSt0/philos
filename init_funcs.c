@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 19:53:59 by msalena           #+#    #+#             */
-/*   Updated: 2022/01/24 19:55:07 by msalena          ###   ########.fr       */
+/*   Updated: 2022/09/11 21:03:08 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,3 +75,4 @@ int	init(t_argv *arg)
 	free_all(cur_time, mute_arr, print_fl, philo_arr);
 	return (END);
 }
+
